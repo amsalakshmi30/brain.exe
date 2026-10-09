@@ -41,7 +41,7 @@ export interface TeamMember {
 // ── Approval History entry ───────────────────────────────────
 export interface ApprovalEntry {
   stage:        ODStage
-  action:       'submitted' | 'approved' | 'rejected' | 'changes_requested' | 'proof_submitted' | 'verified'
+  action:       'submitted' | 'approved' | 'rejected' | 'changes_requested' | 'proof_submitted' | 'verified' | 'reminder_sent'
   approverId:   string
   approverName: string
   comment:      string
@@ -68,13 +68,15 @@ export interface ODRequest {
   department:     string
   className:      string
   rollNo:         string
+  advisorId?:     string      // UID of the class advisor
   isUrgent:       boolean     // start date within 3 days & still pending
   currentStage:   ODStage
   approvalHistory:ApprovalEntry[]
   certificateUrl?: string     // Post-event proof
   proofStatus:    'pending' | 'submitted' | 'verified' | 'overdue' | 'not_required'
-  createdAt:      string
-  updatedAt:      string
+  registrationDeadline?: string  // Optional reg deadline for reminders
+  createdAt:      any
+  updatedAt:      any
 }
 
 // ── Timetable entry (Firestore /timetables/{id}) ─────────────
@@ -112,9 +114,11 @@ export interface EventBoardItem {
   category:    EventBoardCategory
   deadline:    string          // YYYY-MM-DD reg deadline
   description: string
-  postedBy:    string          // UID
+  startDate?:  string          // YYYY-MM-DD event start date
+  postedBy?:   string          // UID (legacy)
+  postedById?: string          // UID
   postedByName:string
-  createdAt:   string
+  createdAt:   any
   // ── Extended fields for Events page ──
   eventDate?:  string          // YYYY-MM-DD actual event date
   prize?:      string          // Prize/reward description
@@ -136,6 +140,14 @@ export interface TeamListing {
   bio:          string
   connectedWith:string[]       // UIDs who clicked Connect
   contactEmail: string
-  createdAt:    string
+  // ── Extended fields used by TeamFinderPage ──
+  title?:       string
+  description?: string
+  teamSize?:    number
+  currentCount?:number
+  deadline?:    string
+  postedById?:  string
+  postedByName?:string
+  createdAt:    any
 }
 

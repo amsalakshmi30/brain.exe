@@ -266,7 +266,7 @@ export default function TeamFinderPage() {
   const submitEvent = async () => {
     if (!eventForm.title || !eventForm.deadline) { toast.error('Title and deadline are required'); return }
     if (isMockMode) {
-      setEvents(p => [{ id: `ev-${Date.now()}`, ...eventForm, category: eventForm.category as any, mode: 'Online', postedById: userProfile?.uid ?? '', postedByName: userProfile?.name ?? '', createdAt: new Date().toISOString() }, ...p])
+      setEvents(p => [{ id: `ev-${Date.now()}`, ...eventForm, category: eventForm.category as any, mode: 'Online' as const, startDate: eventForm.deadline, postedBy: userProfile?.uid ?? '', postedById: userProfile?.uid ?? '', postedByName: userProfile?.name ?? '', createdAt: new Date().toISOString() }, ...p])
       setShowEventForm(false); setEventForm({ title: '', link: '', category: 'Hackathon', deadline: '', description: '' })
       toast.success('Event posted! 🎉'); return
     }

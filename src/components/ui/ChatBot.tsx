@@ -3,7 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { MessageCircle, X, Send, Bot, User, Zap, Sparkles } from 'lucide-react'
 
 // ── Gemini setup ──────────────────────────────────────────────
-const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY as string | undefined
+const RAW_KEY = import.meta.env.VITE_GEMINI_API_KEY as string | undefined
+// Only valid if it's an AI Studio key (starts with 'AIza')
+const GEMINI_API_KEY = RAW_KEY?.startsWith('AIza') ? RAW_KEY : undefined
 
 const SYSTEM_PROMPT = `You are the CAMPUS-SYNC Assistant — a helpful, friendly AI embedded inside a college OD (On-Duty) management web application called Campus-Approve (also known as CAMPUS-SYNC).
 
@@ -129,8 +131,10 @@ export default function ChatBot() {
       setMsgs(p => [...p, { id: Date.now() + 1, role: 'bot', text: reply, time: new Date() }])
     } catch (err) {
       setTyping(false)
-      const errMsg = `⚠️ Couldn't reach the AI right now. ${getFallbackResponse(text)}`
-      setMsgs(p => [...p, { id: Date.now() + 1, role: 'bot', text: errMsg, time: new Date() }])
+      // On API failure, silently fall back to local KB — no error shown
+      const fallback = getFallbackResponse(text)
+      historyRef.current = [...historyRef.current, { role: 'bot', text: fallback }]
+      setMsgs(p => [...p, { id: Date.now() + 1, role: 'bot', text: fallback, time: new Date() }])
     }
   }
 

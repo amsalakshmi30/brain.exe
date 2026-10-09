@@ -83,7 +83,11 @@ export function subscribeToUserODs(uid: string, cb: (ods: ODRequest[]) => void) 
       snap => cb(
         snap.docs
           .map(d => ({ id: d.id, ...d.data() } as ODRequest))
-          .sort((a, b) => (b.createdAt?.seconds ?? 0) - (a.createdAt?.seconds ?? 0))
+          .sort((a, b) => {
+            const ta = (a.createdAt as any)?.seconds ?? 0
+            const tb = (b.createdAt as any)?.seconds ?? 0
+            return tb - ta
+          })
       ),
       err => console.error('subscribeToUserODs:', err))
   })().catch(err => { console.error(err); return () => {} })
