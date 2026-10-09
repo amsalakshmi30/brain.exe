@@ -1,0 +1,50 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "odRequests",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "createdBy",    "order": "ASCENDING"  },
+        { "fieldPath": "createdAt",    "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "odRequests",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "currentStage", "order": "ASCENDING"  },
+        { "fieldPath": "isUrgent",     "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "odRequests",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "createdAt",    "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "notifications",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "userId",       "order": "ASCENDING"  },
+        { "fieldPath": "createdAt",    "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "teamListings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "createdAt",    "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "events",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "createdAt",    "order": "DESCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

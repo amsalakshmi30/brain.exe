@@ -1,0 +1,8 @@
+﻿{
+  "name": "campus-sync-backend",
+  "version": "1.0.0",
+  "description": "CAMPUS-SYNC Firebase Backend",
+  "dependencies": {
+    "firebase": "^10.0.0"
+  }
+}
